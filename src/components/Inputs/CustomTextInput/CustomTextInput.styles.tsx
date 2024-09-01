@@ -7,4 +7,7 @@ export const styles = {
     width: "100%",
     boxSizing: "border-box",
   } as React.CSSProperties,
+  label: {
+    
+  }
 };

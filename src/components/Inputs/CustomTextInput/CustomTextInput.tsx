@@ -4,6 +4,7 @@ import { styles } from "./CustomTextInput.styles";
 interface CustomTextInputProps {
   ID?: string;
   customStyle?: React.CSSProperties;
+  customLabelStyle?: React.CSSProperties;
   placeholder?: string;
   label?: string;
   text?: string;
@@ -24,6 +25,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   label,
   text,
   type = "text",
+  customLabelStyle
 }) => {
   const [inputValue, setInputValue] = useState(text || "");
 
@@ -48,11 +50,15 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     ? { ...styles.input, ...customStyle }
     : styles.input;
 
+    const combinedLabelStyles = customLabelStyle ? {
+      ...styles.label, ...customLabelStyle
+    } : styles.label
+
   const masterID = ID ? `${ID}-input` : "custom-input";
 
   return (
     <div>
-      {label && <label htmlFor={masterID}>{label}</label>}
+      {label && <label style={combinedLabelStyles} htmlFor={masterID}>{label}</label>}
       <input
         type={type === "currency-brl" ? "text" : type}
         id={masterID}

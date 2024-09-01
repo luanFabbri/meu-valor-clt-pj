@@ -8,4 +8,7 @@ export const styles = {
     boxSizing: "border-box" as const,
     height: "100px",
   },
+  label: {
+    
+  }
 };

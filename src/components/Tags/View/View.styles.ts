@@ -3,4 +3,7 @@ export const styles = {
     textAlign: "center" as "center",
     marginTop: "10px",
   },
+  label: {
+    
+  }
 };

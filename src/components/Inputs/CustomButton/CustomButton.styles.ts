@@ -8,4 +8,7 @@ export const styles = {
     cursor: "pointer",
     fontSize: "16px",
   },
+  label: {
+    
+  }
 };

@@ -9,6 +9,7 @@ interface Option {
 interface CustomSelectProps {
   ID?: string;
   customStyle?: React.CSSProperties;
+  customLabelStyle?: React.CSSProperties;
   options: Option[];
   onSelect: (selectedOptions: string[]) => void;
   label?: string;
@@ -20,6 +21,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
   onSelect,
   label,
+  customLabelStyle
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -36,11 +38,15 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     ? { ...styles.select, ...customStyle }
     : styles.select;
 
+    const combinedLabelStyles = customLabelStyle ? {
+      ...styles.label, ...customLabelStyle
+    } : styles.label
+
   const masterID = ID ? `${ID}-select` : "custom-select";
 
   return (
     <div>
-      {label && <label htmlFor={masterID}>{label}</label>}
+      {label && <label style={combinedLabelStyles} htmlFor={masterID}>{label}</label>}
       <select
         id={masterID}
         style={combinedStyles}

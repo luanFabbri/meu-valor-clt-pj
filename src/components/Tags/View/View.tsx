@@ -11,6 +11,7 @@ const View: React.FC<ViewProps> = ({ children, customStyle, ID }) => {
   const combinedStyles = customStyle
     ? { ...styles.view, ...customStyle }
     : styles.view;
+
   const masterID = ID ? `${ID}-view` : "custom-view";
   return (
     <div style={combinedStyles} id={masterID}>
