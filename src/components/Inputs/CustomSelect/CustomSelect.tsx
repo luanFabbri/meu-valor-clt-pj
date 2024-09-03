@@ -11,47 +11,47 @@ interface CustomSelectProps {
   customStyle?: React.CSSProperties;
   customLabelStyle?: React.CSSProperties;
   options: Option[];
-  onSelect: (selectedOptions: string[]) => void;
+  onChange: (selectedOption: string) => void; // Ajuste para retornar uma única string
   label?: string;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   ID,
   customStyle,
+  customLabelStyle,
   options,
-  onSelect,
+  onChange,
   label,
-  customLabelStyle
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValues = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedOptions(selectedValues);
-    onSelect(selectedValues);
+    const value = event.target.value;
+    setSelectedOption(value);
+    onChange(value); // Passa o valor selecionado
   };
 
   const combinedStyles = customStyle
     ? { ...styles.select, ...customStyle }
     : styles.select;
 
-    const combinedLabelStyles = customLabelStyle ? {
-      ...styles.label, ...customLabelStyle
-    } : styles.label
+  const combinedLabelStyles = customLabelStyle
+    ? { ...styles.label, ...customLabelStyle }
+    : styles.label;
 
   const masterID = ID ? `${ID}-select` : "custom-select";
 
   return (
     <div>
-      {label && <label style={combinedLabelStyles} htmlFor={masterID}>{label}</label>}
+      {label && (
+        <label style={combinedLabelStyles} htmlFor={masterID}>
+          {label}
+        </label>
+      )}
       <select
         id={masterID}
         style={combinedStyles}
-        multiple
-        value={selectedOptions}
+        value={selectedOption}
         onChange={handleOptionChange}
       >
         {options.map((option) => (

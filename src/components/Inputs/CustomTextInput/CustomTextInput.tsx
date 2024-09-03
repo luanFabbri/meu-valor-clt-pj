@@ -16,16 +16,18 @@ interface CustomTextInputProps {
     | "tel"
     | "url"
     | "currency-brl";
+  onChange?: (value: string) => void; // Adicionando a prop onChange
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
   ID,
   customStyle,
+  customLabelStyle,
   placeholder,
   label,
   text,
   type = "text",
-  customLabelStyle
+  onChange, // Recebendo a prop onChange
 }) => {
   const [inputValue, setInputValue] = useState(text || "");
 
@@ -41,8 +43,10 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         currency: "BRL",
       }).format(parseFloat(value) / 100);
       setInputValue(formattedValue);
+      if (onChange) onChange(formattedValue); // Chamando onChange com o valor formatado
     } else {
       setInputValue(value);
+      if (onChange) onChange(value); // Chamando onChange com o valor atualizado
     }
   };
 
@@ -50,15 +54,19 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     ? { ...styles.input, ...customStyle }
     : styles.input;
 
-    const combinedLabelStyles = customLabelStyle ? {
-      ...styles.label, ...customLabelStyle
-    } : styles.label
+  const combinedLabelStyles = customLabelStyle
+    ? { ...styles.label, ...customLabelStyle }
+    : styles.label;
 
   const masterID = ID ? `${ID}-input` : "custom-input";
 
   return (
     <div>
-      {label && <label style={combinedLabelStyles} htmlFor={masterID}>{label}</label>}
+      {label && (
+        <label style={combinedLabelStyles} htmlFor={masterID}>
+          {label}
+        </label>
+      )}
       <input
         type={type === "currency-brl" ? "text" : type}
         id={masterID}
